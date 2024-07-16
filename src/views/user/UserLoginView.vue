@@ -6,6 +6,17 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const rules = {
+  userAccount: [
+    { required: true, message: "请输入账号" },
+    { minLength: 1, message: "账号长度不能小于1位" },
+  ],
+  userPassword: [
+    { required: true, message: "请输入密码" },
+    { minLength: 8, message: "密码长度不能小于8位" },
+  ],
+};
+
 const form = ref<API.UserLoginParams>({
   userAccount: "",
   userPassword: "",
@@ -27,29 +38,16 @@ const doLogin = async () => {
     <h2 style="margin-bottom: 16px; text-align: center">用户登录</h2>
     <a-form
       :model="form"
+      :rules="rules"
       style="max-width: 480px; margin: 0 auto"
       label-align="left"
       auto-label-width
-      @submit="doLogin"
+      @submit-success="doLogin"
     >
-      <a-form-item
-        field="userAccount"
-        label="账号"
-        :rules="[
-          { required: true, message: '请输入账号' },
-          { minLength: 1, message: '账号长度不能小于1位' },
-        ]"
-      >
+      <a-form-item field="userAccount" label="账号" validate-trigger="blur">
         <a-input v-model="form.userAccount" placeholder="请输入账号" />
       </a-form-item>
-      <a-form-item
-        field="userPassword"
-        label="密码"
-        :rules="[
-          { required: true, message: '请输入密码' },
-          { minLength: 8, message: '密码长度不能小于8位' },
-        ]"
-      >
+      <a-form-item field="userPassword" label="密码" validate-trigger="blur">
         <a-input-password
           v-model="form.userPassword"
           placeholder="请输入密码"
