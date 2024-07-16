@@ -27,6 +27,7 @@ const doLogin = async () => {
   if (res.code === 200) {
     Message.success("登录成功");
     await router.push("/");
+    localStorage.setItem("token", res.data);
   } else {
     Message.error(res.message);
   }
