@@ -15,8 +15,10 @@
     "@bytemd/plugin-gfm": "^1.21.0",
     "@bytemd/plugin-highlight": "^1.21.0",
     "@bytemd/vue-next": "^1.21.0",
+    "axios": "^1.7.2",
     "monaco-editor": "^0.50.0",
     "pinia": "^2.1.7",
+    "prettier": "^3.3.3",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
