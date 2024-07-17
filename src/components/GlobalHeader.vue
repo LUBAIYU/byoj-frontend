@@ -44,10 +44,9 @@ const doMenuClick = (key: string) => {
             <div class="title">BY OJ</div>
           </div>
         </a-menu-item>
-        <a-menu-item
-          v-for="item in visibleMenus"
-          :key="item.path"
-        >{{ item.name}}</a-menu-item>
+        <a-menu-item v-for="item in visibleMenus" :key="item.path"
+          >{{ item.name }}
+        </a-menu-item>
       </a-menu>
     </a-col>
     <a-col flex="100px">
