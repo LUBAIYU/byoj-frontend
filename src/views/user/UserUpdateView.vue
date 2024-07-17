@@ -12,6 +12,19 @@ const props = withDefaults(defineProps<Params>(), {
   visible: false,
 });
 
+const formRef = ref(null);
+
+const rules = {
+  userAccount: [
+    { required: true, message: "请输入账号" },
+    { minLength: 1, message: "账号长度不能小于1位" },
+  ],
+  userPassword: [
+    { required: true, message: "请输入密码" },
+    { minLength: 8, message: "密码长度不能小于8位" },
+  ],
+};
+
 const roleMenu = [
   {
     value: 0,
@@ -111,7 +124,7 @@ defineExpose({
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      <a-form :model="data" auto-label-width>
+      <a-form :model="data" :ref="formRef" :rules="rules" auto-label-width>
         <a-form-item field="id" label="ID">
           <a-input :model-value="data.id" readonly />
         </a-form-item>
@@ -128,7 +141,7 @@ defineExpose({
           <a-input v-model="data.email" />
         </a-form-item>
         <a-form-item field="userRole" label="用户角色">
-          <a-select v-model="data.userRole" allow-clear>
+          <a-select v-model="data.userRole">
             <a-option
               v-for="item in roleMenu"
               :key="item.value"
@@ -138,7 +151,7 @@ defineExpose({
           </a-select>
         </a-form-item>
         <a-form-item field="status" label="用户状态">
-          <a-select v-model="data.status" allow-clear>
+          <a-select v-model="data.status">
             <a-option
               v-for="item in statusMenu"
               :key="item.value"
