@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { deleteUserByIdAPI, listUserVOsByPageAPI } from "@/api/user";
 import { Message } from "@arco-design/web-vue";
 import moment from "moment";
+import UserUpdateView from "@/views/user/UserUpdateView.vue";
 
 const statusMenu = [
   {
@@ -70,10 +71,17 @@ const columns = [
   },
 ];
 
+const modalRef = ref(null);
+const visible = ref(false);
 const current = ref<number>(1);
 const pageSize = ref<number>(5);
 const tableCount = ref<number>(0);
 const tableData = ref<API.UserVO[]>([]);
+
+// 关闭对话框
+const closeModal = () => {
+  visible.value = false;
+};
 
 // 改变页码
 const handleCurrentChange = (val: number) => {
@@ -123,6 +131,12 @@ const deleteUser = async (id: number) => {
   }
 };
 
+// 点击编辑按钮
+const editUser = (id: number) => {
+  visible.value = true;
+  modalRef.value?.getUserById(id);
+};
+
 onMounted(() => loadData());
 </script>
 
@@ -166,7 +180,7 @@ onMounted(() => loadData());
         {{ moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
       <template #operation="{ record }">
-        <a-button type="text">编 辑</a-button>
+        <a-button type="text" @click="editUser(record.id)">编 辑</a-button>
         <a-popconfirm content="确定删除吗？" @ok="deleteUser(record.id)">
           <a-button type="text" status="danger">删 除</a-button>
         </a-popconfirm>
@@ -183,6 +197,11 @@ onMounted(() => loadData());
       show-total
       show-jumper
       show-page-size
+    />
+    <user-update-view
+      ref="modalRef"
+      :visible="visible"
+      @update:visible="closeModal"
     />
   </div>
 </template>

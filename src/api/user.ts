@@ -25,10 +25,22 @@ export const userRegisterAPI = (data: API.UserRegisterParams) => {
 };
 
 /**
- * 获取用户列表
+ * 获取用户列表（脱敏）
  * @param data
  */
 export const listUserVOsByPageAPI = (data: API.UserPageParams) => {
+  return request({
+    method: "POST",
+    url: "/oj/user/vo/page",
+    data,
+  }) as Promise<API.Result>;
+};
+
+/**
+ * 获取用户列表
+ * @param data
+ */
+export const listUsersByPageAPI = (data: API.UserPageParams) => {
   return request({
     method: "POST",
     url: "/oj/user/page",
@@ -56,6 +68,17 @@ export const updateUserByIdAPI = (data: API.UserUpdateParams) => {
     method: "PUT",
     url: "/oj/user/update",
     data,
+  }) as Promise<API.Result>;
+};
+
+/**
+ * 根据ID获取用户数据（脱敏）
+ * @param id
+ */
+export const getUserVoByIdAPI = (id: number) => {
+  return request({
+    method: "GET",
+    url: `/oj/user/vo/${id}`,
   }) as Promise<API.Result>;
 };
 

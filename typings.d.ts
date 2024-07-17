@@ -44,4 +44,18 @@ declare namespace API {
     userRole?: number;
     status?: number;
   };
+
+  type User = {
+    id: number;
+    userAccount: string;
+    userPassword: string;
+    userName: string;
+    email: string;
+    userRole: number;
+    status: number;
+    salt: string;
+    createTime: Date;
+    updateTime: Date;
+    isDeleted: number;
+  };
 }
