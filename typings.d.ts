@@ -58,4 +58,67 @@ declare namespace API {
     updateTime: Date;
     isDeleted: number;
   };
+
+  interface JudgeCase {
+    input: string;
+    output: string;
+  }
+
+  interface JudgeConfig {
+    timeLimit: number;
+    memoryLimit: number;
+  }
+
+  type QuestionCreateParams = {
+    title: string;
+    content: string;
+    answer: string;
+    tagList: string[];
+    judgeCaseDTOList: JudgeCase[];
+    judgeConfigDTO: JudgeConfig;
+  };
+
+  type QuestionUpdateParams = {
+    id: number;
+    title: string;
+    content: string;
+    answer: string;
+    tagList: string[];
+    judgeCaseDTOList: JudgeCase[];
+    judgeConfigDTO: JudgeConfig;
+  };
+
+  type QuestionPageParams = {
+    id?: number;
+    title?: string;
+    tags?: string;
+    current: number;
+    pageSize: number;
+  };
+
+  type Question = {
+    id: number;
+    title: string;
+    content: string;
+    answer: string;
+    tags: string;
+    judgeCase: string;
+    judgeConfig: string;
+    submitNum: number;
+    acceptNum: number;
+    createTime: Date;
+    updateTime: Date;
+  };
+
+  type QuestionVO = {
+    id: number;
+    title: string;
+    content: string;
+    tagList: string[];
+    judgeConfigVO: JudgeConfig;
+    submitNum: number;
+    acceptNum: number;
+    createTime: Date;
+    updateTime: Date;
+  };
 }

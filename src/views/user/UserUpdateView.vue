@@ -88,6 +88,9 @@ const updateUserById = async () => {
 
 // 提交表单
 const handleOk = () => {
+  if (data.value.userAccount.length < 1 || data.value.userPassword.length < 8) {
+    return;
+  }
   updateUserById();
   handleCancel();
 };

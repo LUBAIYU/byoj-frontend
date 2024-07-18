@@ -22,4 +22,9 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     path: "/user/manage",
     component: () => import("@/views/user/UserManageView.vue"),
   },
+  {
+    name: "题目管理",
+    path: "/question/manage",
+    component: () => import("@/views/question/QuestionManageView.vue"),
+  },
 ];
