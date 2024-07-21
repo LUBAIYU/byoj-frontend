@@ -30,9 +30,14 @@ export const routes: Readonly<RouteRecordRaw[]> = [
   {
     name: "编辑题目",
     path: "/question/edit/:id",
-    component: () => import("@/views/question/QuestionAddOrUpdateVIew.vue"),
+    component: () => import("@/views/question/QuestionUpdateView.vue"),
     meta: {
       hidden: true,
     },
+  },
+  {
+    name: "创建题目",
+    path: "/question/create",
+    component: () => import("@/views/question/QuestionCreateView.vue"),
   },
 ];

@@ -53,16 +53,6 @@ const columns = [
     align: "center",
   },
   {
-    title: "创建时间",
-    slotName: "createTime",
-    align: "center",
-  },
-  {
-    title: "更新时间",
-    slotName: "updateTime",
-    align: "center",
-  },
-  {
     title: "操作",
     slotName: "operation",
     align: "center",
@@ -134,13 +124,13 @@ onMounted(() => loadData());
   <div id="questionManageView">
     <a-form :model="form" style="margin-left: 20px" layout="inline">
       <a-form-item field="id" label="ID">
-        <a-input v-model="form.id" />
+        <a-input v-model="form.id" placeholder="请输入ID" />
       </a-form-item>
       <a-form-item field="title" label="标题">
-        <a-input v-model="form.title" />
+        <a-input v-model="form.title" placeholder="请输入标题" />
       </a-form-item>
       <a-form-item field="tags" label="标签" style="width: 250px">
-        <a-input v-model="form.tags" />
+        <a-input v-model="form.tags" placeholder="请输入标签" />
       </a-form-item>
       <a-form-item>
         <a-button type="primary" style="margin-right: 20px" @click="loadData"
@@ -172,12 +162,6 @@ onMounted(() => loadData());
             ? (record.acceptNum / record.submitNum) * 100
             : 0
         }}%
-      </template>
-      <template #createTime="{ record }">
-        {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
-      </template>
-      <template #updateTime="{ record }">
-        {{ moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
       <template #operation="{ record }">
         <a-button type="text" @click="editQuestion(record.id)">编 辑</a-button>
