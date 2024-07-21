@@ -78,3 +78,17 @@ export const listQuestionVosByPageAPI = (data: API.QuestionPageParams) => {
     data,
   }) as Promise<API.Result>;
 };
+
+/**
+ * 分页获取提交列表（脱敏）
+ * @param data
+ */
+export const listQuestionSubmitVosByPageAPI = (
+  data: API.QuestionSubmitPageParams,
+) => {
+  return request({
+    method: "POST",
+    url: "/oj/question/submit/page",
+    data,
+  }) as Promise<API.Result>;
+};

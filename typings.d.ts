@@ -121,4 +121,21 @@ declare namespace API {
     createTime: Date;
     updateTime: Date;
   };
+
+  type QuestionSubmitVO = {
+    id: number;
+    language: string;
+    judgeInfo: string;
+    status: number;
+    questionId: number;
+    userId: number;
+    createTime: Date;
+  };
+
+  type QuestionSubmitPageParams = {
+    language?: string;
+    questionId?: number;
+    current: number;
+    pageSize: number;
+  };
 }

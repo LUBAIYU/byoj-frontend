@@ -144,13 +144,17 @@ onMounted(() => loadData());
   <div id="userManageView">
     <a-form :model="form" style="margin-left: 20px" layout="inline">
       <a-form-item field="id" label="ID">
-        <a-input v-model="form.id" />
+        <a-input v-model="form.id" placeholder="请输入ID" />
       </a-form-item>
       <a-form-item field="userName" label="用户名">
-        <a-input v-model="form.userName" />
+        <a-input v-model="form.userName" placeholder="请输入用户名" />
       </a-form-item>
       <a-form-item field="status" label="用户状态" style="width: 250px">
-        <a-select v-model="form.status" allow-clear>
+        <a-select
+          v-model="form.status"
+          placeholder="请输入用户状态"
+          allow-clear
+        >
           <a-option
             v-for="item in statusMenu"
             :key="item.value"
