@@ -53,6 +53,16 @@ const columns = [
     align: "center",
   },
   {
+    title: "创建时间",
+    slotName: "createTime",
+    align: "center",
+  },
+  {
+    title: "更新时间",
+    slotName: "updateTime",
+    align: "center",
+  },
+  {
     title: "操作",
     slotName: "operation",
     align: "center",
@@ -139,7 +149,7 @@ onMounted(() => loadData());
         <a-button @click="clearForm">清 空</a-button>
       </a-form-item>
     </a-form>
-    <a-table :data="tableData" :columns="columns">
+    <a-table :data="tableData" :columns="columns" :scroll="{ x: 2000 }">
       <template #tagList="{ record }">
         <a-space wrap>
           <a-tag
@@ -162,6 +172,12 @@ onMounted(() => loadData());
             ? (record.acceptNum / record.submitNum) * 100
             : 0
         }}%
+      </template>
+      <template #createTime="{ record }">
+        {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
+      <template #updateTime="{ record }">
+        {{ moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
       <template #operation="{ record }">
         <a-button type="text" @click="editQuestion(record.id)">编 辑</a-button>
