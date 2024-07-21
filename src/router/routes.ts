@@ -45,4 +45,9 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     path: "/question/browse",
     component: () => import("@/views/question/QuestionBrowseView.vue"),
   },
+  {
+    name: "在线做题",
+    path: "/question/do/:id",
+    component: () => import("@/views/question/QuestionDoView.vue"),
+  },
 ];
