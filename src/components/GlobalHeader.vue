@@ -2,8 +2,10 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { routes } from "@/router/routes";
+import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
+const userStore = useUserStore();
 
 // 当前选中的菜单
 const selectedKeys = ref(["/"]);
@@ -16,7 +18,16 @@ router.afterEach((to) => {
 // 可供选择的菜单
 const visibleMenus = computed(() => {
   return routes.filter((route) => {
-    return !route.meta?.hidden;
+    if (route.meta?.hidden) {
+      return false;
+    }
+    if (route.meta?.access && route.meta?.access === "admin") {
+      const role = userStore.getRole();
+      if (role !== 0) {
+        return false;
+      }
+    }
+    return true;
   });
 });
 
