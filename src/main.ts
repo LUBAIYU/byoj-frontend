@@ -7,11 +7,11 @@ import ArcoVue from "@arco-design/web-vue";
 import "@arco-design/web-vue/dist/arco.css";
 import "bytemd/dist/index.css";
 
-const app = createApp(App);
 const pinia = createPinia();
+const app = createApp(App);
 
-app.use(router);
-app.use(ArcoVue);
 app.use(pinia);
+app.use(ArcoVue);
+app.use(router);
 
 app.mount("#app");

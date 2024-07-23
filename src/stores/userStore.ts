@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
   // 用户角色
-  const role = ref<number>(1);
+  const role = ref<number>();
   // 设置用户角色
   const setRole = (val: number) => {
     role.value = val;

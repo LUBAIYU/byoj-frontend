@@ -3,7 +3,9 @@ import { ref } from "vue";
 import { userLoginAPI } from "@/api/user";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
 
+const userStore = useUserStore();
 const router = useRouter();
 
 const rules = {
@@ -26,8 +28,11 @@ const doLogin = async () => {
   const res = await userLoginAPI(form.value);
   if (res.code === 200) {
     Message.success("登录成功");
+    const token = res.data;
+    // 保存Token到本地
+    localStorage.setItem("token", token);
+    // 跳转到主页
     await router.push("/");
-    localStorage.setItem("token", res.data);
   } else {
     Message.error(res.message);
   }
