@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { routes } from "@/router/routes";
 import { useUserStore } from "@/stores/userStore";
+import { getUserId } from "@/util/token";
+import { Message } from "@arco-design/web-vue";
+import { getUserVoByIdAPI } from "@/api/user";
 
 const router = useRouter();
 const userStore = useUserStore();
+
+// 当前登录用户
+const loginUser = ref<API.UserVO>();
 
 // 当前选中的菜单
 const selectedKeys = ref(["/"]);
@@ -31,10 +37,39 @@ const visibleMenus = computed(() => {
   });
 });
 
+// 获取登录用户
+const getLoginUser = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    Message.error("请先登录");
+    await router.push("/user/login");
+    return;
+  }
+  const userId = getUserId(token);
+  if (!userId) {
+    Message.error("用户ID获取失败");
+    return;
+  }
+  const res = await getUserVoByIdAPI(userId);
+  if (res.code === 200) {
+    loginUser.value = res.data;
+  } else {
+    Message.error(res.message);
+  }
+};
+
 // 跳转路由
 const doMenuClick = (key: string) => {
   router.push(key);
 };
+
+// 退出登录
+const doLogout = () => {
+  localStorage.removeItem("token");
+  router.push("/user/login");
+};
+
+onMounted(() => getLoginUser());
 </script>
 
 <template>
@@ -60,8 +95,14 @@ const doMenuClick = (key: string) => {
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="100px">
-      <div>哈哈哈</div>
+    <a-col flex="100px" align="center ">
+      <a-dropdown>
+        <div>{{ loginUser?.userName }}</div>
+        <template #content>
+          <a-doption>个人信息</a-doption>
+          <a-doption @click="doLogout">退出登录</a-doption>
+        </template>
+      </a-dropdown>
     </a-col>
   </a-row>
 </template>

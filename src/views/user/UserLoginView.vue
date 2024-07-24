@@ -3,9 +3,7 @@ import { ref } from "vue";
 import { userLoginAPI } from "@/api/user";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
-import { useUserStore } from "@/stores/userStore";
 
-const userStore = useUserStore();
 const router = useRouter();
 
 const rules = {
