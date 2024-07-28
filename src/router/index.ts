@@ -34,8 +34,6 @@ router.beforeEach((to, from, next) => {
     role = getRole(token);
     userStore.setRole(role ?? 1);
   }
-
-  
   // 校验是否有访问权限;
   if (to.meta.access && to.meta.access === "admin") {
     if (role !== 0) {
