@@ -138,4 +138,11 @@ declare namespace API {
     current: number;
     pageSize: number;
   };
+
+  type QuestionSubmitParams = {
+    code: string;
+    language: string;
+    questionId: number;
+    userId: number;
+  };
 }

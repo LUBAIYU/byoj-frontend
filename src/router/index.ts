@@ -14,6 +14,14 @@ const router = createRouter({
  */
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+
+  // 获取过期时间
+  const expireTime = localStorage.getItem("expireTime");
+  const expire = JSON.parse(expireTime ?? "0");
+  if (new Date() > expire) {
+    localStorage.removeItem("token");
+  }
+
   // 校验用户是否已登录
   const token = localStorage.getItem("token");
   // 判断当前页面是否为登录注册页
@@ -21,12 +29,14 @@ router.beforeEach((to, from, next) => {
     next();
     return;
   }
+
   // 先校验是否登录
   if (!token) {
     Message.error("请先登录");
     next("/user/login");
     return;
   }
+
   // 获取用户角色信息
   let role = userStore.getRole();
   // 如果不存在则解析token获取
@@ -34,6 +44,7 @@ router.beforeEach((to, from, next) => {
     role = getRole(token);
     userStore.setRole(role ?? 1);
   }
+
   // 校验是否有访问权限;
   if (to.meta.access && to.meta.access === "admin") {
     if (role !== 0) {

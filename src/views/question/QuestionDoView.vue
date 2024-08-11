@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { Message } from "@arco-design/web-vue";
-import { getQuestionVoByIdAPI } from "@/api/question";
+import { doQuestionSubmitAPI, getQuestionVoByIdAPI } from "@/api/question";
 import MdViewer from "@/components/MdViewer.vue";
 import CodeEditor from "@/components/CodeEditor.vue";
+import { getUserId } from "@/util/token";
 
 const route = useRoute();
+const router = useRouter();
 
 const question = ref<API.QuestionVO>({
   id: 0,
@@ -19,8 +21,8 @@ const question = ref<API.QuestionVO>({
   },
   submitNum: 0,
   acceptNum: 0,
-  createTime: "",
-  updateTime: "",
+  createTime: new Date(),
+  updateTime: new Date(),
 });
 
 const form = ref({
@@ -50,7 +52,7 @@ const loadData = async () => {
     Message.error("路径参数异常");
     return;
   }
-  const res = await getQuestionVoByIdAPI(id);
+  const res = await getQuestionVoByIdAPI(Number(id));
   if (res.code === 200) {
     question.value = res.data;
   } else {
@@ -60,6 +62,27 @@ const loadData = async () => {
 
 const handleCodeChange = (value: string) => {
   form.value.code = value;
+};
+
+// 提交代码
+const doQuestion = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    Message.error("请先登录");
+    await router.push("/user/login");
+    return;
+  }
+  const userId = getUserId(token);
+  const res = await doQuestionSubmitAPI({
+    ...form.value,
+    questionId: Number(form.value.questionId),
+    userId,
+  });
+  if (res.code === 200) {
+    Message.success("提交成功");
+  } else {
+    Message.error(res.message);
+  }
 };
 
 onMounted(() => loadData());
@@ -125,6 +148,7 @@ onMounted(() => loadData());
         <a-button
           type="primary"
           style="width: 240px; margin-top: 10px; float: right"
+          @click="doQuestion"
           >提交代码
         </a-button>
       </a-col>

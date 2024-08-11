@@ -92,3 +92,15 @@ export const listQuestionSubmitVosByPageAPI = (
     data,
   }) as Promise<API.Result>;
 };
+
+/**
+ * 提交题目
+ * @param data
+ */
+export const doQuestionSubmitAPI = (data: API.QuestionSubmitParams) => {
+  return request({
+    method: "POST",
+    url: "/oj/question/do",
+    data,
+  }) as Promise<API.Result>;
+};
