@@ -175,7 +175,9 @@ onMounted(() => loadData());
         {{ record.userRole === 0 ? "管理员" : "普通用户" }}
       </template>
       <template #status="{ record }">
-        {{ record.status === 0 ? "启用" : "禁用" }}
+        <a-tag :color="record.status === 0 ? 'green' : 'red'">
+          {{ record.status === 0 ? "启用" : "禁用" }}
+        </a-tag>
       </template>
       <template #createTime="{ record }">
         {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
@@ -206,6 +208,7 @@ onMounted(() => loadData());
       ref="modalRef"
       :visible="visible"
       @update:visible="closeModal"
+      @load:data="loadData"
     />
   </div>
 </template>

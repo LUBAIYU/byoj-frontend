@@ -47,7 +47,7 @@ const statusMenu = [
   },
 ];
 
-const emit = defineEmits(["update:visible"]);
+const emit = defineEmits(["update:visible", "load:data"]);
 
 const data = ref<API.User>({
   createTime: new Date(),
@@ -81,6 +81,7 @@ const updateUserById = async () => {
   const res = await updateUserByIdAPI(data.value);
   if (res.code === 200) {
     Message.success("修改成功");
+    emit("load:data");
   } else {
     Message.error(res.message);
   }

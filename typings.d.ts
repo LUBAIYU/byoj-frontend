@@ -125,8 +125,8 @@ declare namespace API {
   type QuestionSubmitVO = {
     id: number;
     language: string;
-    judgeInfo: string;
-    status: number;
+    memoryUsage: number;
+    judgeInfo: JudgeInfo;
     questionId: number;
     userId: number;
     createTime: Date;
@@ -134,7 +134,7 @@ declare namespace API {
 
   type QuestionSubmitPageParams = {
     language?: string;
-    questionId?: number;
+    questionName?: string;
     current: number;
     pageSize: number;
   };
@@ -144,5 +144,12 @@ declare namespace API {
     language: string;
     questionId: number;
     userId: number;
+  };
+
+  type JudgeInfo = {
+    status: number;
+    message: string;
+    memoryUsage: number;
+    timeUsage: number;
   };
 }

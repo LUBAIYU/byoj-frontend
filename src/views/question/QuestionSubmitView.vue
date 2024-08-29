@@ -6,7 +6,7 @@ import { Message } from "@arco-design/web-vue";
 
 const form = ref<API.QuestionSubmitPageParams>({
   language: "",
-  questionId: undefined,
+  questionName: "",
   current: 1,
   pageSize: 5,
 });
@@ -38,8 +38,13 @@ const columns = [
     align: "center",
   },
   {
-    title: "判题信息",
-    slotName: "judgeInfo",
+    title: "内存消耗（MB）",
+    slotName: "memoryUsage",
+    align: "center",
+  },
+  {
+    title: "时间消耗（ms）",
+    slotName: "timeUsage",
     align: "center",
   },
   {
@@ -48,13 +53,13 @@ const columns = [
     align: "center",
   },
   {
-    title: "题目ID",
-    dataIndex: "questionId",
+    title: "题目",
+    dataIndex: "questionName",
     align: "center",
   },
   {
-    title: "用户ID",
-    dataIndex: "userId",
+    title: "用户名",
+    dataIndex: "userName",
     align: "center",
   },
   {
@@ -77,7 +82,7 @@ const loadData = async () => {
 const clearForm = () => {
   form.value = {
     language: "",
-    questionId: undefined,
+    questionName: "",
     current: 1,
     pageSize: 5,
   };
@@ -105,14 +110,15 @@ onMounted(() => loadData());
 <template>
   <div id="questionSubmitView">
     <a-form :model="form" layout="inline" style="margin-left: 20px">
-      <a-form-item field="questionId" label="题目ID">
-        <a-input v-model="form.questionId" placeholder="请输入题目ID" />
+      <a-form-item field="questionId" label="题目">
+        <a-input v-model="form.questionName" placeholder="请输入题目" />
       </a-form-item>
       <a-form-item field="language" label="编程语言">
         <a-select
           v-model="form.language"
           placeholder="请选择编程语言"
           allow-clear
+          style="width: 180px"
         >
           <a-option
             v-for="item in options"
@@ -130,11 +136,17 @@ onMounted(() => loadData());
       </a-form-item>
     </a-form>
     <a-table :data="tableData" :columns="columns">
-      <template #judgeInfo="{ record }">
-        {{ record.judgeInfo }}
+      <template #memoryUsage="{ record }">
+        {{ JSON.parse(record.judgeInfo)?.memoryUsage }}
+      </template>
+      <template #timeUsage="{ record }">
+        {{ JSON.parse(record.judgeInfo)?.timeUsage }}
       </template>
       <template #status="{ record }">
-        {{ record.status }}
+        <a-tag v-if="record.status === 0">等待中</a-tag>
+        <a-tag v-if="record.status === 1" color="blue">判题中</a-tag>
+        <a-tag v-if="record.status === 2" color="green">通过</a-tag>
+        <a-tag v-if="record.status === 3" color="red">失败</a-tag>
       </template>
       <template #createTime="{ record }">
         {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
