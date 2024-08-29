@@ -31,7 +31,8 @@ const doLogin = async () => {
     localStorage.setItem("token", token);
     // 保存Token过期时间
     const expireTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
-    localStorage.setItem("expireTime", JSON.stringify(expireTime));
+    const timestamp = expireTime.getTime();
+    localStorage.setItem("expireTime", JSON.stringify(timestamp));
     // 跳转到主页
     await router.push("/");
   } else {

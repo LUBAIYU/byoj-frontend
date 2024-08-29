@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
   // 获取过期时间
   const expireTime = localStorage.getItem("expireTime");
   const expire = JSON.parse(expireTime ?? "0");
-  if (new Date() > expire) {
+  if (new Date().getTime() > expire) {
     localStorage.removeItem("token");
   }
 
