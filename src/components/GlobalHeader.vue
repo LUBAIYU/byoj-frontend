@@ -65,7 +65,9 @@ const doMenuClick = (key: string) => {
 
 // 退出登录
 const doLogout = () => {
+  loginUser.value = undefined;
   localStorage.removeItem("token");
+  localStorage.removeItem("expireTime");
   router.push("/user/login");
 };
 

@@ -58,11 +58,6 @@ const columns = [
     align: "center",
   },
   {
-    title: "用户名",
-    dataIndex: "userName",
-    align: "center",
-  },
-  {
     title: "创建时间",
     slotName: "createTime",
     align: "center",

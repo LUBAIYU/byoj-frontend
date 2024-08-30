@@ -127,8 +127,7 @@ declare namespace API {
     language: string;
     memoryUsage: number;
     judgeInfo: JudgeInfo;
-    questionId: number;
-    userId: number;
+    questionName: string;
     createTime: Date;
   };
 
