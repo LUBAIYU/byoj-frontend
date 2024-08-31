@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { routes } from "@/router/routes";
 import { useUserStore } from "@/stores/userStore";
 import { getUserId } from "@/util/token";
@@ -8,6 +8,7 @@ import { Message } from "@arco-design/web-vue";
 import { getUserVoByIdAPI } from "@/api/user";
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 
 // 当前登录用户
@@ -41,7 +42,6 @@ const visibleMenus = computed(() => {
 const getLoginUser = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    Message.error("请先登录");
     await router.push("/user/login");
     return;
   }
