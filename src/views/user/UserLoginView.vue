@@ -3,8 +3,11 @@ import { ref } from "vue";
 import { userLoginAPI } from "@/api/user";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
+import { getRole } from "@/util/token";
+import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const rules = {
   userAccount: [
@@ -33,6 +36,9 @@ const doLogin = async () => {
     const expireTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
     const timestamp = expireTime.getTime();
     localStorage.setItem("expireTime", JSON.stringify(timestamp));
+    // 保存用户角色
+    const userRole = getRole(token);
+    userStore.setRole(userRole);
     // 跳转到主页
     await router.push("/");
   } else {

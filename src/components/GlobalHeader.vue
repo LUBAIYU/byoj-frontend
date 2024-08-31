@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routes } from "@/router/routes";
 import { useUserStore } from "@/stores/userStore";
@@ -68,10 +68,11 @@ const doLogout = () => {
   loginUser.value = undefined;
   localStorage.removeItem("token");
   localStorage.removeItem("expireTime");
+  userStore.setRole(undefined);
   router.push("/user/login");
 };
 
-onMounted(() => getLoginUser());
+watch(visibleMenus, () => getLoginUser());
 </script>
 
 <template>
@@ -97,7 +98,7 @@ onMounted(() => getLoginUser());
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="100px" align="center ">
+    <a-col flex="100px" align="center">
       <a-dropdown>
         <div>{{ loginUser?.userName }}</div>
         <template #content>
