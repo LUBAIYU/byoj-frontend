@@ -37,8 +37,8 @@ const options = [
     value: "java",
   },
   {
-    label: "C++",
-    value: "cpp",
+    label: "JavaScript",
+    value: "javascript",
   },
   {
     label: "Go",
